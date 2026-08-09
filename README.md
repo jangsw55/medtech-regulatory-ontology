@@ -126,9 +126,11 @@ By explicitly modeling regulatory concepts and their relationships, AI systems b
 Each domain follows a consistent methodology:
 
 ```
-Research
+Source Research
     ↓
-Concept Analysis
+Cross-Jurisdiction Comparison
+    ↓
+Concept Analysis/Extraction
     ↓
 Ontology Design
     ↓
@@ -141,7 +143,7 @@ Example Dataset
 Design Review
 ```
 
-Every module documents not only the ontology itself, but also the reasoning behind design decisions.
+Each jurisdiction is researched independently first. Concepts are not treated as ontology concepts until relevant sources have been compared across jurisdictions.
 
 ---
 
@@ -152,6 +154,18 @@ research/
     Public standards analysis
     Domain comparison
     Ontology design notes
+
+    Each domain follows the same file pattern, e.g.:
+    └── registration/
+        ├── sources/
+            ├── 01_FDA.md
+            ├── 02_MDR_IVDR.md
+            └── 03_IMDRF.md
+        ├── 01_Comparison.md
+        ├── 02_concepts.md
+        ├── 03_design_decisions.md
+        ├── 04_open_questions.md
+        └── 05_ontology_draft.md
 
 ontology/
     OWL ontologies
@@ -164,13 +178,16 @@ examples/
 
 docs/
     Architecture
-    Design decisions # project level decisions. Domain decisions are in research/<domain>/design_decisions.md
+    Design decisions #project level decisions. Domain decisions are in research/<domain>/design_decisions.md"
     Modeling guidelines
+    ADR #Architecture Decision Records - created once a domain accumulates 5-10 significant modeling decisions; early decisions live inline in ontology_design.md
 
 scripts/
     RDFLib
     Neo4j
     SPARQL
+
+**Note on scope**: Each domain intentionally starts with a minimal file set (sources → concepts → design → open questions). Additional structure (e.g. per-standard breakdowns, separate ADR files) is added only when it earns its complexity — not upfront. The goal is depth on completed domains, not breadth of folders.
 ```
 
 ---
@@ -202,6 +219,7 @@ scripts/
 * [ ] Clinical Evaluation
 * [ ] Document Ontology
 * [ ] Reference Data
+* [ ] QMS (ISO 13485)
 
 ---
 
@@ -282,10 +300,13 @@ Rather than asking AI to memorize regulations, the goal is to provide AI with an
 
 ## Core Design Principle
 
-> **Every module in this repository follows the same principle: research first, model second, implement third.**
+> **Research first, compare second, model third, implement fourth.**
 
-Nothing is added unless it can be traced back to publicly available standards or documented design decisions.
+Each ontology concept should be traceable to publicly available sources and documented modeling decisions.
 
+Nothing is added unless it can be traced back to:
+- a public regulatory source, or
+- an explicit ontology design decision.
 ---
 
 ## Disclaimer
