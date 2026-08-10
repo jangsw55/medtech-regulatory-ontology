@@ -180,6 +180,22 @@ The document addresses the practical implementation of the gradual EUDAMED roll-
 
 ---
 
+### Source S09 — MDCG 2018-1 Rev.4 (UDI guidance)
+
+**Title:** Guidance on the application of the UDI system under the MDR and IVDR (MDCG 2018-1, Rev.4)
+
+**Identifier:** MDCG 2018-1 Rev.4
+
+**Issuing organization:** Medical Device Coordination Group
+
+**Publication:** Rev.4 (latest revision as listed on EC guidance index)
+
+**Source type:** Official EU regulatory guidance (MDCG)
+
+Notes: MDCG 2018-1 (including Rev.4) is explicitly referenced on the European Commission UDI/guidance index and provides implementation guidance on Basic UDI‑DI assignment, UDI-DI/UDI-PI semantics, and the relationship between UDI identifiers and EUDAMED registration. Recommended reading for Basic UDI‑DI assignment/change rules and for software-specific UDI guidance.
+
+---
+
 # 2. Extracted Domain Concepts
 
 ## Concept: Medical Device
@@ -684,7 +700,12 @@ UDI should be treated as an identifier construct, not as a device itself.
 
 ### Regulatory text
 
-MDR and IVDR require assignment of a Basic UDI-DI before placing the relevant device on the market and require submission to the UDI database together with specified core data elements.
+MDR and IVDR require assignment of a Basic UDI‑DI before placing the relevant device on the market and require submission to the UDI database together with specified core data elements. MDCG guidance (notably MDCG 2018‑1 Rev.4 and MDCG 2022‑7) clarifies that Basic UDI‑DI serves a grouping/regulatory‑reference role distinct from the device-model UDI‑DI and the production identifier (UDI‑PI). Key regulatory facts and ontology-relevant observations:  
+- Regulatory fact: Basic UDI‑DI must be assigned prior to placing the device on the market (MDR Art. 29; IVDR Art. 26) and, for specified conformity-assessment routes, prior to applying to a notified body (MDR Art. 29(3); IVDR Art. 26(2)).  
+- Regulatory fact: Basic UDI‑DI is submitted to EUDAMED as part of the UDI/DEV module and links to the core device dataset required by MDR/IVDR. (European Commission UDI/Device registration pages; MDCG guidance.)  
+- Ontology observation: Basic UDI‑DI behaves as a regulatory grouping or model-level grouping identifier intended for registry and administrative reference; it should be modelled separately from UDI‑DI (model-level device identifier) and UDI‑PI (production identifier).  
+- Ontology observation: Basic UDI‑DI assignment and change rules are implementation-detailed in MDCG guidance; the ontology should capture assignmentEvent and changeEvent as reified events with provenance (actor, date, source) rather than conflating assignment with a simple data property.  
+- Evidence note: See MDCG 2018‑1 Rev.4, MDCG 2022‑7, and the European Commission UDI/Device registration pages for implementation-level clarifications. [EXTERNAL SOURCE REQUIRED for full Annex VI normative text interpretations where MDCG commentary is insufficient].
 
 ### Ontology interpretation
 
@@ -1490,7 +1511,10 @@ IVDR explicitly establishes this role and its responsibility for assessment, des
 | EUDAMED registration      | Regulatory record                  | EUDAMED                                        | create/update                    | MDR 29–31; IVDR 26–28       |
 | EMDN code                 | Device nomenclature classification | EMDN system                                    | classification/nomenclature      | European Commission         |
 
-The Commission states that EMDN is the nomenclature manufacturers use when registering medical devices in EUDAMED.
+The Commission states that EMDN is the nomenclature manufacturers use when registering medical devices in EUDAMED. The EMDN is the European Medical Device Nomenclature maintained under the European Commission's EUDAMED programme and used as the formal classification/nomenclature value during device registration. Ontology-relevant observations:  
+- Regulatory fact: EMDN is the code system required (or recommended by the Commission) for device registration entries in EUDAMED; its governance and updates reference MDR Article 26 / IVDR Article 23 and EC implementation procedures.  
+- Ontology observation: EMDN should be modelled as a classification/nomenclature scheme (EMDNCode) or reference data entity rather than as an identifier of an individual device instance; use cases will treat EMDN as a classification property on DeviceRegistrationRecords.  
+- Evidence note: The Commission's EUDAMED/EMDN pages and MDCG guidance documents detail EMDN's role; historical mappings to GMDN exist in Commission materials but a formal semantic mapping to FDA ProductCode is NOT provided by the sources and remains out-of-scope for mapping until explicit rules are found. [EXTERNAL SOURCE REQUIRED for EMDN governance/markup technical specification if further technical fields are required].
 
 ---
 

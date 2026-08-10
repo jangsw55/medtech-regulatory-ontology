@@ -1046,7 +1046,11 @@ FDA describes UDI as comprising a device identifier and, where applicable, produ
 
 **Regulatory evidence**
 
-FDA identifies DI as the mandatory fixed portion of UDI and states that it identifies the labeler and specific version/model. ([U.S. Food and Drug Administration][8])
+FDA identifies DI as the mandatory fixed portion of UDI and states that it identifies the labeler and specific version/model. FDA explicitly distinguishes DI (the fixed, model-level device identifier) from PI (production-level variable data such as lot, batch, or serial number). FDA guidance and 21 CFR Part 830 indicate that GUDID captures DI-level metadata while production identifiers (PIs) are not stored in GUDID. Ontology-relevant observations:  
+- DI should be modelled as a device-model identifier (DeviceIdentifier / UDI-DI) distinct from ProductionIdentifier (PI / UDI-PI).  
+- DI functions as a registry key within GUDID; PI is associated with production/instance events and should be modelled as production-identification data attached to productionEvent or deviceInstance.  
+- ProductCode is a separate regulatory classification code and should not be conflated with DI.  
+([U.S. Food and Drug Administration][8]; 21 CFR Part 830).
 
 **Ontology interpretation**
 
@@ -1097,7 +1101,11 @@ PI should not be treated as equivalent to DI. DI identifies the device/model-lev
 
 **Regulatory evidence**
 
-FDA describes GUDID as an FDA-administered database/reference catalog containing device identification information and specifically states that GUDID contains the DI portion rather than PIs. ([U.S. Food and Drug Administration][9])
+FDA describes GUDID as an FDA-administered database/reference catalog containing device identification information and specifically states that GUDID contains DI-level records (device-model identification) rather than production identifiers (PIs). Ontology-relevant observations:  
+- Model GUDID as a regulatory information system (Registry) and GUDID records as data records (GUDIDRecord) that reference DeviceIdentifier (DI).  
+- Do not model the registry itself as a DeviceIdentifier; instead model the relation: GUDID contains → GUDIDRecord; GUDIDRecord references → DeviceIdentifier (DI).  
+- Because GUDID omits PI values, production identifiers must be linked to production events or device-instance artefacts, not to GUDID records.  
+([U.S. Food and Drug Administration][9]; FDA GUDID guidance).
 
 **Ontology interpretation**
 
