@@ -145,6 +145,14 @@ Design Review
 
 Each jurisdiction is researched independently first. Concepts are not treated as ontology concepts until relevant sources have been compared across jurisdictions.
 
+A key modeling principle in this project is the separation between unresolved questions and modeled decisions:
+
+- Open Questions capture concepts or mappings that remain semantically uncertain or evidence-limited.
+- Design Decisions capture the current working assumptions that are sufficiently supported to guide ontology development.
+- In a knowledge graph context, unresolved equivalence is represented as uncertainty rather than being forced into a false or premature mapping.
+
+This keeps the ontology faithful to the regulatory evidence while still allowing iterative model development.
+
 ---
 
 ## Repository Structure

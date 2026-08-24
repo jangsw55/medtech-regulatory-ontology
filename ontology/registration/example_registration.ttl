@@ -1,0 +1,92 @@
+@prefix reg: <https://example.org/medtech-regulatory-ontology/registration#> .
+@prefix ex: <https://example.org/medtech-regulatory-ontology/example#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Germany a reg:Jurisdiction ; rdfs:label "Germany"@en .
+ex:UnitedStates a reg:Jurisdiction ; rdfs:label "United States"@en .
+
+ex:ExampleDiagnosticsGmbH a reg:Organization ;
+    reg:legalEntityName "Example Diagnostics GmbH" ;
+    reg:hasActorRole ex:ManufacturerRole1 .
+
+ex:ExampleDiagnosticsUS a reg:Organization ;
+    reg:legalEntityName "Example Diagnostics US LLC" ;
+    reg:hasActorRole ex:ImporterRole1 .
+
+ex:GermanAuthority a reg:RegulatoryAuthority ;
+    reg:legalEntityName "Example German Regulatory Authority" .
+
+ex:USAuthority a reg:RegulatoryAuthority ;
+    reg:legalEntityName "Example US Regulatory Authority" .
+
+ex:ManufacturerRole1 a reg:ManufacturerRole ;
+    rdfs:label "Manufacturer"@en .
+ex:ImporterRole1 a reg:ImporterRole ;
+    rdfs:label "Importer"@en .
+
+ex:Device001Identifier a reg:Identifier ;
+    rdfs:label "EX-DEV-001"@en ;
+    reg:identifies ex:Device001 .
+
+ex:Device002Identifier a reg:Identifier ;
+    rdfs:label "EX-DEV-002"@en ;
+    reg:identifies ex:Device002 .
+
+ex:Device001 a reg:Device ;
+    reg:deviceName "Example Analyzer A" ;
+    reg:hasIdentifier ex:Device001Identifier ;
+    reg:hasJurisdiction ex:Germany ;
+    reg:hasRegistrationRecord ex:Registration001 ;
+    reg:hasSubmission ex:Submission001 .
+
+ex:Device002 a reg:Device ;
+    reg:deviceName "Example Analyzer B" ;
+    reg:hasIdentifier ex:Device002Identifier ;
+    reg:hasJurisdiction ex:UnitedStates ;
+    reg:hasRegistrationRecord ex:Registration002 ;
+    reg:hasSubmission ex:Submission002 .
+
+ex:Registration001 a reg:RegistrationRecord ;
+    reg:registrationNumber "DE-REG-001" ;
+    reg:hasJurisdiction ex:Germany ;
+    reg:hasStatus reg:Approved ;
+    reg:issueDate "2026-01-15"^^xsd:date ;
+    reg:effectiveDate "2026-02-01"^^xsd:date .
+
+ex:Registration002 a reg:RegistrationRecord ;
+    reg:registrationNumber "US-REG-002" ;
+    reg:hasJurisdiction ex:UnitedStates ;
+    reg:hasStatus reg:Pending ;
+    reg:issueDate "2026-03-10"^^xsd:date .
+
+ex:Submission001 a reg:Submission ;
+    reg:hasDecision ex:Decision001 ;
+    reg:supportsEvidence ex:Evidence001 .
+
+ex:Submission002 a reg:Submission ;
+    reg:hasDecision ex:Decision002 ;
+    reg:supportsEvidence ex:Evidence002 .
+
+ex:Decision001 a reg:RegulatoryDecision ;
+    reg:issuedByAuthority ex:GermanAuthority ;
+    reg:hasStatus reg:Approved ;
+    reg:issueDate "2026-01-15"^^xsd:date .
+
+ex:Decision002 a reg:RegulatoryDecision ;
+    reg:issuedByAuthority ex:USAuthority ;
+    reg:hasStatus reg:Pending ;
+    reg:issueDate "2026-03-10"^^xsd:date .
+
+ex:Evidence001 a reg:EvidenceArtifact ;
+    reg:documentReference "https://example.org/evidence/registration-001"^^xsd:anyURI .
+
+ex:Evidence002 a reg:EvidenceArtifact ;
+    reg:documentReference "https://example.org/evidence/registration-002"^^xsd:anyURI .
+
+# Labels for status resources added to satisfy CQ queries
+reg:Approved a reg:RegistrationStatus ;
+    rdfs:label "Approved"@en .
+
+reg:Pending a reg:RegistrationStatus ;
+    rdfs:label "Pending"@en .

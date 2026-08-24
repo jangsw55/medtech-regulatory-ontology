@@ -1,0 +1,270 @@
+@prefix reg: <https://example.org/medtech-regulatory-ontology/registration#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+reg: a owl:Ontology ;
+    rdfs:label "Medical Device Registration Ontology"@en ;
+    rdfs:comment "Initial ontology draft for the registration domain, derived from the cross-jurisdiction comparison research and the current ontology design notes."@en .
+
+# ---------------------------------------------------------------------------
+# Core classes
+# ---------------------------------------------------------------------------
+
+reg:RegulatoryEntity a owl:Class ;
+    rdfs:label "Regulatory Entity"@en ;
+    rdfs:comment "Abstract top-level class for products, actors, records, and obligations relevant to regulatory compliance and market access."@en .
+
+reg:Device a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Device"@en ;
+    rdfs:comment "A medical device or product subject to registration, listing, classification, or market-access activity."@en .
+
+reg:Organization a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "A legal or business organization involved in device lifecycle operations, regulatory responsibilities, or market action."@en .
+
+reg:Person a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "An individual with a role in a regulatory process or a formal responsibility for a device or organization."@en .
+
+reg:Establishment a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Establishment"@en ;
+    rdfs:comment "A place of business or operating site associated with manufacturing, importation, distribution, or related obligations."@en .
+
+reg:Jurisdiction a owl:Class ;
+    rdfs:label "Jurisdiction"@en ;
+    rdfs:comment "A regulatory environment such as a country, region, or market zone in which regulatory obligations apply."@en .
+
+reg:RegistrationRecord a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Registration Record"@en ;
+    rdfs:comment "A persistent registry or records object describing the regulatory presence or status of a regulated entity."@en .
+
+reg:RegistrationEvent a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Registration Event"@en ;
+    rdfs:comment "A temporal action that creates, updates, verifies, suspends, or removes a registration record."@en .
+
+reg:Submission a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Submission"@en ;
+    rdfs:comment "A formal submission or dossier associated with a product, device, or registration process."@en .
+
+reg:RegulatoryDecision a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Regulatory Decision"@en ;
+    rdfs:comment "A formal outcome issued by a regulatory authority or body in response to a submission or request."@en .
+
+reg:Certificate a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Certificate"@en ;
+    rdfs:comment "A document or credential issued as formal evidence of compliance or authorization."@en .
+
+reg:EvidenceArtifact a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Evidence Artifact"@en ;
+    rdfs:comment "A document, file, test result, or artifact supporting a regulatory submission or decision."@en .
+
+reg:RegulatoryAuthority a owl:Class ;
+    rdfs:subClassOf reg:Organization ;
+    rdfs:label "Regulatory Authority"@en ;
+    rdfs:comment "A public authority or agency responsible for regulatory review, approval, or oversight."@en .
+
+reg:NotifiedBody a owl:Class ;
+    rdfs:subClassOf reg:Organization ;
+    rdfs:label "Notified Body"@en ;
+    rdfs:comment "A conformity assessment body authorized to perform assessment tasks in a jurisdiction."@en .
+
+reg:RegulatoryRole a owl:Class ;
+    rdfs:label "Regulatory Role"@en ;
+    rdfs:comment "A role an actor plays in a regulatory context, such as manufacturer, importer, distributor, or authorized representative."@en .
+
+reg:ManufacturerRole a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryRole ;
+    rdfs:label "Manufacturer Role"@en ;
+    rdfs:comment "Role assigned to an organization or person responsible for manufacturing a device."@en .
+
+reg:ImporterRole a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryRole ;
+    rdfs:label "Importer Role"@en ;
+    rdfs:comment "Role assigned to the party responsible for import-related obligations in a jurisdiction."@en .
+
+reg:DistributorRole a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryRole ;
+    rdfs:label "Distributor Role"@en ;
+    rdfs:comment "Role assigned to a party distributing a device in a market."@en .
+
+reg:AuthorisedRepresentativeRole a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryRole ;
+    rdfs:label "Authorised Representative Role"@en ;
+    rdfs:comment "Role representing a party formally designated to act on behalf of a manufacturer in a jurisdiction."@en .
+
+reg:EconomicOperator a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Economic Operator"@en ;
+    rdfs:comment "EU-focused concept for actors with legal or economic responsibilities in the supply chain."@en .
+
+reg:Identifier a owl:Class ;
+    rdfs:label "Identifier"@en ;
+    rdfs:comment "A structured identifier such as a UDI, registration number, or other regulatory code."@en .
+
+reg:StatusValue a owl:Class ;
+    rdfs:label "Status Value"@en ;
+    rdfs:comment "A controlled lifecycle state or status used to represent compliance or case progression."@en .
+
+reg:PostMarketObligation a owl:Class ;
+    rdfs:subClassOf reg:RegulatoryEntity ;
+    rdfs:label "Post-Market Obligation"@en ;
+    rdfs:comment "A continuing requirement imposed after a device enters the market."@en .
+
+# ---------------------------------------------------------------------------
+# Object properties
+# ---------------------------------------------------------------------------
+
+reg:hasIdentifier a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:Identifier ;
+    rdfs:label "has identifier"@en ;
+    rdfs:comment "Links a regulated object to a structured identifier assigned to it."@en .
+
+reg:identifies a owl:ObjectProperty ;
+    rdfs:domain reg:Identifier ;
+    rdfs:range reg:RegulatoryEntity ;
+    rdfs:label "identifies"@en ;
+    rdfs:comment "Declares the regulated object referenced by an identifier."@en .
+
+reg:hasRegistrationRecord a owl:ObjectProperty ;
+    rdfs:domain reg:Device ;
+    rdfs:range reg:RegistrationRecord ;
+    rdfs:label "has registration record"@en ;
+    rdfs:comment "Links a device to one or more regulatory registration records."@en .
+
+reg:createdByEvent a owl:ObjectProperty ;
+    rdfs:domain reg:RegistrationRecord ;
+    rdfs:range reg:RegistrationEvent ;
+    rdfs:label "created by event"@en ;
+    rdfs:comment "Captures the event or lifecycle action that created or changed a registration record."@en .
+
+reg:hasActorRole a owl:ObjectProperty ;
+    rdfs:domain reg:Organization ;
+    rdfs:range reg:RegulatoryRole ;
+    rdfs:label "has actor role"@en ;
+    rdfs:comment "Associates an actor with a specific regulatory role within a process or context."@en .
+
+reg:playsRoleIn a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:RegulatoryEntity ;
+    rdfs:label "plays role in"@en ;
+    rdfs:comment "Indicates the role an entity plays in relation to a device, submission, or process."@en .
+
+reg:hasJurisdiction a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:Jurisdiction ;
+    rdfs:label "has jurisdiction"@en ;
+    rdfs:comment "Associates a regulated object or process with the jurisdiction in which it is active or registered."@en .
+
+reg:hasSubmission a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:Submission ;
+    rdfs:label "has submission"@en ;
+    rdfs:comment "Links a device, actor, or process to a formal submission or dossier."@en .
+
+reg:hasDecision a owl:ObjectProperty ;
+    rdfs:domain reg:Submission ;
+    rdfs:range reg:RegulatoryDecision ;
+    rdfs:label "has decision"@en ;
+    rdfs:comment "Connects a submission to the decision that resulted from the review process."@en .
+
+reg:supportsEvidence a owl:ObjectProperty ;
+    rdfs:domain reg:Submission ;
+    rdfs:range reg:EvidenceArtifact ;
+    rdfs:label "supports evidence"@en ;
+    rdfs:comment "Links a regulatory object to evidence that substantiates the submission or decision."@en .
+
+reg:subjectOfObligation a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:PostMarketObligation ;
+    rdfs:label "subject of obligation"@en ;
+    rdfs:comment "Connects a device or actor to post-market obligations that apply after market entry."@en .
+
+reg:hasStatus a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:StatusValue ;
+    rdfs:label "has status"@en ;
+    rdfs:comment "Captures the current lifecycle status of the object or record."@en .
+
+reg:referencesRecord a owl:ObjectProperty ;
+    rdfs:domain reg:RegistrationEvent ;
+    rdfs:range reg:RegistrationRecord ;
+    rdfs:label "references record"@en ;
+    rdfs:comment "Indicates the record affected by a lifecycle event."@en .
+
+reg:issuedByAuthority a owl:ObjectProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range reg:Organization ;
+    rdfs:label "issued by authority"@en ;
+    rdfs:comment "Captures the authority or organisation that issued a record, certificate, or decision."@en .
+
+# ---------------------------------------------------------------------------
+# Data properties
+# ---------------------------------------------------------------------------
+
+reg:registrationNumber a owl:DatatypeProperty ;
+    rdfs:domain reg:RegistrationRecord ;
+    rdfs:range xsd:string ;
+    rdfs:label "registration number"@en ;
+    rdfs:comment "A literal registration number assigned to a registration record."@en .
+
+reg:issueDate a owl:DatatypeProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range xsd:date ;
+    rdfs:label "issue date"@en ;
+    rdfs:comment "The date on which a record, identifier, decision, or certificate was issued."@en .
+
+reg:effectiveDate a owl:DatatypeProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range xsd:date ;
+    rdfs:label "effective date"@en ;
+    rdfs:comment "The date on which a record, decision, or obligation takes effect."@en .
+
+reg:statusLabel a owl:DatatypeProperty ;
+    rdfs:domain reg:RegulatoryEntity ;
+    rdfs:range xsd:string ;
+    rdfs:label "status label"@en ;
+    rdfs:comment "Human-readable status text for use in displays or interface layers."@en .
+
+reg:legalEntityName a owl:DatatypeProperty ;
+    rdfs:domain reg:Organization ;
+    rdfs:range xsd:string ;
+    rdfs:label "legal entity name"@en ;
+    rdfs:comment "The legal or business name of an organization or person acting in a regulatory role."@en .
+
+reg:deviceName a owl:DatatypeProperty ;
+    rdfs:domain reg:Device ;
+    rdfs:range xsd:string ;
+    rdfs:label "device name"@en ;
+    rdfs:comment "Human-readable product name or model name for a device."@en .
+
+reg:documentReference a owl:DatatypeProperty ;
+    rdfs:domain reg:EvidenceArtifact ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "document reference"@en ;
+    rdfs:comment "URI pointer to the stored document or external reference associated with the evidence artifact."@en .
+
+# ---------------------------------------------------------------------------
+# Annotation values (examples)
+# ---------------------------------------------------------------------------
+
+reg:Approved a reg:StatusValue ;
+    rdfs:label "Approved"@en .
+
+reg:Pending a reg:StatusValue ;
+    rdfs:label "Pending"@en .
+
+reg:Rejected a reg:StatusValue ;
+    rdfs:label "Rejected"@en .

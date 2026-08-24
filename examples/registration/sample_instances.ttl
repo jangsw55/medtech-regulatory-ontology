@@ -1,0 +1,61 @@
+@prefix reg: <https://example.org/medtech-regulatory-ontology/registration#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Jurisdictions
+reg:US a reg:Jurisdiction ;
+    rdfs:label "United States"@en .
+
+reg:EU a reg:Jurisdiction ;
+    rdfs:label "European Union"@en .
+
+# Device and identifiers
+reg:device-001 a reg:Device ;
+    reg:deviceName "SmartMonitor X1"@en ;
+    reg:hasJurisdiction reg:US ;
+    reg:hasIdentifier reg:udi-001 ;
+    reg:hasRegistrationRecord reg:registration-001 ;
+    reg:hasSubmission reg:submission-001 .
+
+reg:udi-001 a reg:Identifier ;
+    rdfs:label "UDI-12345"@en ;
+    reg:identifies reg:device-001 .
+
+# Registration record
+reg:registration-001 a reg:RegistrationRecord ;
+    reg:registrationNumber "FDA-REG-2026-001" ;
+    reg:hasJurisdiction reg:US ;
+    reg:hasStatus reg:Approved ;
+    reg:issuedByAuthority reg:fda ;
+    reg:effectiveDate "2026-01-15"^^xsd:date .
+
+# Organizations and roles
+reg:acme-medical a reg:Organization ;
+    reg:legalEntityName "Acme Medical Systems" ;
+    reg:hasActorRole reg:manufacturer-role-001 ;
+    reg:hasJurisdiction reg:US .
+
+reg:manufacturer-role-001 a reg:ManufacturerRole ;
+    reg:playsRoleIn reg:device-001 .
+
+reg:fda a reg:RegulatoryAuthority ;
+    reg:legalEntityName "U.S. Food and Drug Administration" ;
+    reg:hasJurisdiction reg:US .
+
+# Submission and decision
+reg:submission-001 a reg:Submission ;
+    reg:hasDecision reg:decision-001 ;
+    reg:supportsEvidence reg:evidence-001 .
+
+reg:decision-001 a reg:RegulatoryDecision ;
+    reg:issuedByAuthority reg:fda ;
+    reg:effectiveDate "2026-01-15"^^xsd:date ;
+    reg:hasStatus reg:Approved .
+
+reg:evidence-001 a reg:EvidenceArtifact ;
+    reg:documentReference <https://example.org/docs/technical-file-smartmonitor-x1.pdf> ;
+    reg:hasJurisdiction reg:US .
+
+# Status values
+reg:Approved a reg:StatusValue ;
+    rdfs:label "Approved"@en .

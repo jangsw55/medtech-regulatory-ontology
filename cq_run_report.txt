@@ -1,0 +1,8 @@
+CQ run report
+
+('1: devices and jurisdictions', 'ok', None)
+('2: device registration numbers', 'ok', None)
+('3: current registration status', 'ok', None)
+('4: organizations and roles', 'ok', None)
+('5: submissions and decisions', 'ok', None)
+('6: evidence supporting submissions', 'ok', None)

@@ -1,0 +1,74 @@
+@prefix reg: <https://example.org/medtech-regulatory-ontology/registration#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+reg:DeviceShape a sh:NodeShape ;
+    sh:targetClass reg:Device ;
+    sh:property [
+        sh:path reg:hasIdentifier ;
+        sh:minCount 1 ;
+        sh:class reg:Identifier ;
+        sh:message "Every device should have at least one identifier."@en
+    ] ;
+    sh:property [
+        sh:path reg:hasJurisdiction ;
+        sh:minCount 1 ;
+        sh:class reg:Jurisdiction ;
+        sh:message "Every device should be associated with at least one jurisdiction."@en
+    ] .
+
+reg:RegistrationRecordShape a sh:NodeShape ;
+    sh:targetClass reg:RegistrationRecord ;
+    sh:property [
+        sh:path reg:hasJurisdiction ;
+        sh:minCount 1 ;
+        sh:class reg:Jurisdiction ;
+        sh:message "A registration record must identify the relevant jurisdiction."@en
+    ] ;
+    sh:property [
+        sh:path reg:hasStatus ;
+        sh:minCount 0 ;
+        sh:class reg:StatusValue ;
+        sh:message "If a status is present, it should be represented as a StatusValue instance."@en
+    ] .
+
+reg:SubmissionShape a sh:NodeShape ;
+    sh:targetClass reg:Submission ;
+    sh:property [
+        sh:path reg:hasDecision ;
+        sh:minCount 1 ;
+        sh:class reg:RegulatoryDecision ;
+        sh:message "A submission should be linked to at least one regulatory decision."@en
+    ] .
+
+reg:OrganizationShape a sh:NodeShape ;
+    sh:targetClass reg:Organization ;
+    sh:property [
+        sh:path reg:legalEntityName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Organization names should be represented as a string value."@en
+    ] ;
+    sh:property [
+        sh:path reg:hasActorRole ;
+        sh:class reg:RegulatoryRole ;
+        sh:message "Any actor role should be a RegulatoryRole instance."@en
+    ] .
+
+reg:DecisionShape a sh:NodeShape ;
+    sh:targetClass reg:RegulatoryDecision ;
+    sh:property [
+        sh:path reg:issuedByAuthority ;
+        sh:minCount 1 ;
+        sh:class reg:Organization ;
+        sh:message "A regulatory decision should indicate the issuing authority."@en
+    ] .
+
+reg:EvidenceShape a sh:NodeShape ;
+    sh:targetClass reg:EvidenceArtifact ;
+    sh:property [
+        sh:path reg:documentReference ;
+        sh:datatype xsd:anyURI ;
+        sh:message "Document references should be URIs."@en
+    ] .
